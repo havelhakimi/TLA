@@ -34,7 +34,7 @@ Some Important arguments: </br>
 ### For multiple  random runs
 In `train.py` set the `--seed=None` for multiple random runs
 ### Other arguments for TLA in train.py:
-Argumnets of `train.py` which are `--norm`, `--proj`, and `--hsize` are part of TLA but have not been used in this work and can be ignored. 
+Arguments of train.py, namely `--norm`, `--proj`, and `--hsize`, are part of TLA but have not been used in this work and can be ignored.
 
 
 
