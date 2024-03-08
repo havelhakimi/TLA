@@ -9,8 +9,8 @@
 - torch-sparse == 0.6.17
 
 ## Data
-- The repository contains tokenized versions of the WOS dataset in `data/wos` folder. This is obtained following the same way as in [contrastive-htc](https://github.com/wzh9969/contrastive-htc#preprocess).
-- Specific details on how to obtain the original datasets (WOS, RCV1-V2 and NYT) and the corresponding scripts  to preprocess them are mentioned in [contrastive-htc](https://github.com/wzh9969/contrastive-htc#preprocess) and will be added here later on.
+- The repository contains tokenized versions of the WOS dataset in `data/wos` folder, processed using BERT tokenzier. This is obtained following the same way as in [contrastive-htc](https://github.com/wzh9969/contrastive-htc#preprocess).
+- Specific details on how to obtain the original datasets (WOS, RCV1-V2 and NYT) and the corresponding scripts to preprocess them are mentioned in [contrastive-htc](https://github.com/wzh9969/contrastive-htc#preprocess). They will be added here later on.
 
 ## Train
 The `train.py` can be used to train all the models by setting different arguments.  
