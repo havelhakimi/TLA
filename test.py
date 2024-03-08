@@ -20,7 +20,8 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
     #checkpoint = torch.load(os.path.join('checkpoints', args.name, 'checkpoint_best{}.pt'.format(args.extra)),map_location='cpu')
-    data_path_root='/scratch/prashant1.iitr/ashish/LHA_WOS/pyscript/'
+    #data_path_root='/scratch/prashant1.iitr/ashish/LHA_WOS/pyscript/'
+    data_path_root=os.path.join('../TLA/data', args.data)
     data_path=data_path_root+'Checkpoints/'
     checkpoint = torch.load(os.path.join(data_path, args.name, 'checkpoint_best{}.pt'.format(args.extra)),
                             map_location='cpu')       
