@@ -21,19 +21,20 @@ Some Important arguments: </br>
 - `--name` name of directory in which your model will be saved. For e.g. the above model will be saved in `./HTLA/data/wos/ckp_bert`
 - `--data` name of dataset directory which contains your data and related files
 - `--graph` whether to use graph encoder
+
 ###  For HTLA (does Hierarchical Text Classification)
-`python train.py --name='ckp_htla' --batch 10 --data='wos' --graph 1 --graph_type='GPA' --edge_dim 30 --trpmg 1 --mg_list 0.1 0.1` </br>
+`python train.py --name='ckp_htla' --batch 10 --data='wos' --graph 1 --graph_type='GPA' --edge_dim 30 --tla 1 --tl_temp 0.07` </br>
 </br>
 Some Important arguments: </br>
 - `--graph_type` type of graph encoder. Possible choices are 'GCN,'GAT', 'graphormer', 'GPA'. HTLA uses GPA as the graph encoder
 - `--edge_dim` edge feature size for GPA (We use 30 as edge feature size for each dataset )
-- `--trpmg` whether Hierarchical Triplet Loss required or not
-- `--mg_list` margin distance for each level (We use 0.1 as margin distance for each level of WOS)
-- The node feature is fixed as 768 to match the text feature size and is not included as run time argument  
+- `--tla` whether Text-Label Alignment Loss required or not. If set to 0, the model will be optimized only on BCE loss, which we refer to as BERT-GPTrans in the paper.
+- `--tl_temp` Tempertaure value for the TLA loss (We use 0.07 as the temp value for all datasets)
+- The node feature is fixed as 768 to match the text feature size and is not included as run time argument   
 ### For multiple  random runs
 In `train.py` set the `--seed=None` for multiple random runs
-### Some irrelevant arguments in train.py:
-Last four argumnets of `train.py` which are `--mine`, `--mine_pen`, `--netw` and `--min_proj`, have no role in HTLA. They are part of another component that is not relevant to this work and can be ignored. 
+### Other arguments for TLA in train.py:
+Argumnets of `train.py` which are `--norm`, `--proj`, and `--hsize` are part of TLA but have not been used in this work and can be ignored. 
 
 
 
