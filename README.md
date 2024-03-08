@@ -1,4 +1,4 @@
-# TLA
+# HTLA
 
 ## Requirements
 - Python >= 3.6
@@ -28,8 +28,8 @@ Some Important arguments: </br>
 Some Important arguments: </br>
 - `--graph_type` type of graph encoder. Possible choices are 'GCN,'GAT', 'graphormer', 'GPA'. HTLA uses GPA as the graph encoder
 - `--edge_dim` edge feature size for GPA (We use 30 as edge feature size for each dataset )
-- `--tla` whether Text-Label Alignment Loss required or not. If set to 0, the model will be optimized only on BCE loss, which we refer to as BERT-GPTrans in the paper.
-- `--tl_temp` Tempertaure value for the TLA loss (We use 0.07 as the temp value for all datasets)
+- `--tla` whether Text-Label Alignment (TLA) Loss required or not. If set to 0, the model will be optimized only on BCE loss, which we refer to as BERT-GPTrans in the paper.
+- `--tl_temp` Temperature value for the TLA loss (We use 0.07 as the temp. value for all datasets)
 - The node feature is fixed as 768 to match the text feature size and is not included as run time argument   
 ### For multiple  random runs
 In `train.py` set the `--seed=None` for multiple random runs
