@@ -119,7 +119,8 @@ if __name__ == '__main__':
     args.name = args.data + '-' + args.name
     tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
     #data_path = os.path.join('data', args.data)
-    data_path='/scratch/prashant1.iitr/ashish/LHA_WOS/pyscript/'
+    #data_path='/scratch/prashant1.iitr/ashish/LHA_WOS/pyscript/'
+    data_path = os.path.join('../TLA/data', args.data)
     args.data=data_path
     label_dict = torch.load(os.path.join(data_path, 'bert_value_dict.pt'))
     label_dict = {i: tokenizer.decode(v, skip_special_tokens=True) for i, v in label_dict.items()}
