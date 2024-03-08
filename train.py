@@ -98,7 +98,7 @@ parser.add_argument('--tla', type=int, default=0, help='whether TLA required or 
 parser.add_argument('--tl_pen', type=float, default=1.0, help='weight for TLA loss')
 parser.add_argument('--tl_temp', type=float, default=1.0, help='Temperature of TLA loss')
 parser.add_argument('--norm', type=int, default=0, help='whether embeedings to be normalized before TLA')
-parser.add_argument('--proj', type=int, default=1, help='whether embeddings of text and label to be transformed before TLA')
+parser.add_argument('--proj', type=int, default=0, help='whether embeddings of text and label to be transformed before TLA')
 parser.add_argument('--hsize', default=768, type=int, help='Hidden size after projection')
 
 
