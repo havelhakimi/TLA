@@ -4,7 +4,7 @@ from gpa import GraphEncoder
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
-from criterion_new import TLAloss1, TLAloss2, TLAlosspr
+from criterion import TLAloss
 
 
 
@@ -23,7 +23,7 @@ class PLM_Graph(nn.Module):
         self.dot=dot
         self.tla=tla
         if self.tla:
-          self.tloss=TLAlosspr(temp=tl_temp,norm=norm,proj=proj,hsize=hsize)
+          self.tloss=TLAloss(temp=tl_temp,norm=norm,proj=proj,hsize=hsize)
           self.tl_pen=tl_pen
         if self.graph:
           self.gc1 = GraphEncoder(config, graph_type=graph_type,edge_dim=edge_dim, layer=layer, data_path=data_path,tokenizer=mod_type,label_refiner=label_refiner)
