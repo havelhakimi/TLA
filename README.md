@@ -22,7 +22,7 @@ Some Important arguments: </br>
 - `--data` name of dataset directory which contains your data and related files
 - `--graph` whether to use graph encoder
 
-###  For HiTLA (BERT+GPTrans+TLA; does Hierarchical Text Classification)
+###  For HTLA (BERT+GPTrans+TLA; does Hierarchical Text Classification)
 `python train.py --name='ckp_htla' --batch 10 --data='wos' --graph 1 --graph_type='GPTrans' --edge_dim 30 --tla 1 --tl_temp 0.07` </br>
 </br>
 Some Important arguments: </br>
