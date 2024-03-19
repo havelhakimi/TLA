@@ -301,7 +301,7 @@ class GraphEncoder(nn.Module):
                 path_dict[v] = s
                 if num_class < v:
                     num_class = v
-        if self.graph_type == 'graphormer' or self.graph_type == 'GPA' :
+        if self.graph_type == 'graphormer' or self.graph_type == 'GPTrans' :
             num_class += 1
             for i in range(num_class):
                 if i not in path_dict:
@@ -355,7 +355,7 @@ class GraphEncoder(nn.Module):
 
             self.id_embedding = nn.Embedding(len(self.inverse_label_list) + 1, config.hidden_size,
                                               len(self.inverse_label_list))
-            if self.graph_type=='GPA':
+            if self.graph_type=='GPTrans':
             
                 self.distance_embedding = nn.Embedding(20, edge_dim, 0)
                 self.edge_embedding = nn.Embedding(len(self.inverse_label_list) + 1, edge_dim, 0)
@@ -395,7 +395,7 @@ class GraphEncoder(nn.Module):
             extra_attn = extra_attn.view(self.label_num, 1, self.label_num, 1).expand(-1, expand_size, -1,
                                                                                       expand_size)
             extra_attn = extra_attn.reshape(self.label_num * expand_size, -1)
-        elif self.graph_type=='GPA':
+        elif self.graph_type=='GPTrans':
             label_emb += self.id_embedding(self.label_id[:, None].expand(-1, expand_size)).view(1, -1,
                                                                                                 self.config.hidden_size)
             extra_attn = self.distance_embedding(self.distance_mat) + self.edge_embedding(self.edge_mat).sum(
