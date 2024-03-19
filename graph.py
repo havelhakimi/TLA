@@ -253,7 +253,7 @@ class GraphLayer(nn.Module):
             label_emb = nn.functional.dropout(label_emb, p=self.dropout, training=self.training)
             label_emb = residual + label_emb
             label_emb = self.layer_norm(label_emb)
-        elif self.graph_type=='GPA':
+        elif self.graph_type=='GPTrans':
             label_emb,_=self.graph(label_emb,extra_attn,)
             if self.label_refiner:
             
