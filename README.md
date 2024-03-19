@@ -1,4 +1,4 @@
-# HTLA
+# TLA
 
 ## Requirements
 - Python >= 3.6
@@ -18,16 +18,16 @@ The `train.py` can be used to train all the models by setting different argument
 ### For BERT (does flat multi-label classification) 
 `python train.py --name='ckp_bert' --batch 10 --data='wos' --graph 0` </br> </br>
 Some Important arguments: </br>
-- `--name` name of directory in which your model will be saved. For e.g. the above model will be saved in `./HTLA/data/wos/ckp_bert`
+- `--name` name of directory in which your model will be saved. For e.g. the above model will be saved in `./TLA/data/wos/ckp_bert`
 - `--data` name of dataset directory which contains your data and related files
 - `--graph` whether to use graph encoder
 
 ###  For HTLA (does Hierarchical Text Classification)
-`python train.py --name='ckp_htla' --batch 10 --data='wos' --graph 1 --graph_type='GPA' --edge_dim 30 --tla 1 --tl_temp 0.07` </br>
+`python train.py --name='ckp_htla' --batch 10 --data='wos' --graph 1 --graph_type='GPTrans' --edge_dim 30 --tla 1 --tl_temp 0.07` </br>
 </br>
 Some Important arguments: </br>
 - `--graph_type` type of graph encoder. Possible choices are 'GCN, 'GAT', 'graphormer' and 'GPTrans'. HTLA uses GPTrans as the graph encoder
-- `--edge_dim` edge feature size for GPA (We use 30 as edge feature size for each dataset )
+- `--edge_dim` edge feature size for GPTrans (We use 30 as edge feature size for each dataset )
 - `--tla` whether Text-Label Alignment (TLA) Loss required or not. If set to 0, the model will be optimized only on BCE loss, which we refer to as BERT-GPTrans in the paper.
 - `--tl_temp` Temperature value for the TLA loss (We use 0.07 as the temp. value for all datasets)
 - The node feature is fixed as 768 to match the text feature size and is not included as run time argument   
@@ -42,7 +42,7 @@ Arguments of train.py, namely `--norm`, `--proj`, and `--hsize`, are part of TLA
 To run the trained model on test set run the script `test.py` </br> 
 `python test.py --name ckp_htla --data wos --extra _macro` </br> </br>
 Some Important arguments
-- `--name` name of the directory which contains the saved checkpoint. The checkpoint is saved in `../HTLA/data/wos/` when working with WOS dataset
+- `--name` name of the directory which contains the saved checkpoint. The checkpoint is saved in `../TLA/data/wos/` when working with WOS dataset
 - `--data` name of dataset directory which contains your data and related files
 - `--extra` two checkpoints are kept based on macro-F1 and micro-F1 respectively. The possible choices are  `_macro` and `_micro` to choose from the two checkpoints
 
