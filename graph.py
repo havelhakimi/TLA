@@ -216,7 +216,7 @@ class GraphLayer(nn.Module):
         elif self.graph_type == 'GAT':
             pass
             self.graph = GATConv(config.hidden_size, config.hidden_size, 1)
-        elif self.graph_type=='GPA':
+        elif self.graph_type=='GPTrans':
             self.graph=GraphPropagationAttention(node_dim=config.hidden_size, edge_dim=edge_dim, num_heads=config.num_attention_heads, qkv_bias=False, attn_drop= config.attention_probs_dropout_prob, proj_drop= config.attention_probs_dropout_prob)
 
         self.layer_norm = nn.LayerNorm(config.hidden_size)
