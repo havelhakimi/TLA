@@ -46,12 +46,7 @@ if __name__ == '__main__':
 
     dataset = BertDataset(device=device, pad_idx=tokenizer.pad_token_id, data_path=data_path_root)
 
-    # for only bert
-    '''model = ContrastModel.from_pretrained('bert-base-uncased', num_labels=num_class,
-                                          contrast_loss=0,
-                                          layer=0, data_path=data_path_root, multi_label=args.multi,
-                                          lamb=args.lamb, threshold=args.thre, tau=args.tau)'''
-    
+   
     model = PLM_Graph(config, num_labels=num_class,
                                           graph=args.graph,mod_type=args.mod_type,graph_type=args.graph_type,
                                           bce_wt=args.bce_wt,dot=args.dot,
