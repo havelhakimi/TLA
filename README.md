@@ -1,4 +1,4 @@
-# TLA
+# TLA (Text-Label Alignment)
 
 ## Requirements
 - Python >= 3.6
