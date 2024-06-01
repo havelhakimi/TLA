@@ -89,7 +89,7 @@ parser.add_argument('--graph', default=0, type=int, help='Whether use graph enco
 parser.add_argument('--layer', default=1, type=int, help='Layer of Graphormer.')
 parser.add_argument('--mod_type', default='bert-base-uncased', type=str, choices=['bert-base-uncased','roberta-large'], help='Select backbone')
 parser.add_argument('--graph_type', type=str, default='GPTrans',choices=['GPTrans','graphormer','GAT', 'GCN'], help='graph type')
-parser.add_argument('--edge_dim', default=30, type=int, help='Edge dimension for GPA .')
+parser.add_argument('--edge_dim', default=30, type=int, help='Edge dimension for GPTrans .')
 parser.add_argument('--label_refiner', default=1, type=int, help='Label Refiner.')
 parser.add_argument('--bce_wt', type=float, default=1, help='bce_wt.')
 parser.add_argument('--dot', default=0, type=int, help='Dot prod.')
