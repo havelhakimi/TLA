@@ -14,6 +14,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--device', type=str, default='cuda')
 parser.add_argument('--batch', type=int, default=32, help='Batch size.')
 parser.add_argument('--name', type=str, required=True, help='Name of checkpoint. Commonly as DATASET-NAME.')
+parser.add_argument('--data', type=str, default='wos', choices=['wos', 'nyt', 'rcv'], help='Dataset.')
 parser.add_argument('--extra', default='_micro', choices=['_macro', '_micro'], help='An extra string in the name of checkpoint.')
 #parser.add_argument('--thr', type=float, default=0.5, help='Threshold.')
 args = parser.parse_args()
@@ -21,7 +22,7 @@ args = parser.parse_args()
 if __name__ == '__main__':
     #checkpoint = torch.load(os.path.join('checkpoints', args.name, 'checkpoint_best{}.pt'.format(args.extra)),map_location='cpu')    
     data_path_root=os.path.join('../TLA/data', args.data)
-    data_path=data_path_root+'Checkpoints/'
+    data_path=data_path_root+'/Checkpoints/'
     checkpoint = torch.load(os.path.join(data_path, args.name, 'checkpoint_best{}.pt'.format(args.extra)),
                             map_location='cpu')       
     batch_size = args.batch
