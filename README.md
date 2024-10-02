@@ -49,6 +49,20 @@ Some Important arguments
 - `--extra` two checkpoints are kept based on macro-F1 and micro-F1 respectively. The possible choices are  `_macro` and `_micro` to choose from the two checkpoints
 
 ## Citation
+```bibtex
+@inproceedings{zhu-etal-2023-hitin,
+  title = "{H}i{TIN}: Hierarchy-aware Tree Isomorphism Network for Hierarchical Text Classification",
+  author = "Zhu, He and Zhang, Chong and Huang, Junjie and Wu, Junran and Xu, Ke",
+  booktitle = "Proceedings of the 61st Annual Meeting of the Association for Computational Linguistics",
+  month = jul,
+  year = 2023,
+  address = "Toronto, Canada",
+  publisher = "Association for Computational Linguistics",
+  url = "https://aclanthology.org/2023.acl-long.432",
+  pages = "7809--7821",
+}
+
+
 `@InProceedings{10.1007/978-3-031-70365-2_10,\
 author="Kumar, Ashish\
 and Toshniwal, Durga",\
