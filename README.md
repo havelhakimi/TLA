@@ -49,3 +49,20 @@ Some Important arguments
 - `--extra` two checkpoints are kept based on macro-F1 and micro-F1 respectively. The possible choices are  `_macro` and `_micro` to choose from the two checkpoints
 
 ## Citation
+`@InProceedings{10.1007/978-3-031-70365-2_10,
+author="Kumar, Ashish
+and Toshniwal, Durga",
+editor="Bifet, Albert
+and Davis, Jesse
+and Krilavi{\v{c}}ius, Tomas
+and Kull, Meelis
+and Ntoutsi, Eirini
+and {\v{Z}}liobait{\.{e}}, Indr{\.{e}}",
+title="Modeling Text-Label Alignment for Hierarchical Text Classification",
+booktitle="Machine Learning and Knowledge Discovery in Databases. Research Track",
+year="2024",
+publisher="Springer Nature Switzerland",
+address="Cham",
+pages="163--179",
+isbn="978-3-031-70365-2"
+}`
