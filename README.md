@@ -48,3 +48,4 @@ Some Important arguments
 - `--data` name of dataset directory which contains your data and related files
 - `--extra` two checkpoints are kept based on macro-F1 and micro-F1 respectively. The possible choices are  `_macro` and `_micro` to choose from the two checkpoints
 
+## Citation
