@@ -175,10 +175,10 @@ class GraphPropagationAttention(nn.Module):
 
 
         q, k, v = qkv.unbind(0)
-        attn = (q @ k.transpose(-2, -1)) * self.scale # [B, n_head, 1+N, 1+N]
+        attn = (q @ k.transpose(-2, -1)) * self.scale # [B, n_head, N, N]
         #print(edge_embeds.shape)
-        attn_bias = self.reduce(edge_embeds) # [B, C, 1+N, 1+N] -> [B, n_head, 1+N, 1+N]
-        attn = attn + attn_bias # [B, n_head, 1+N, 1+N]
+        attn_bias = self.reduce(edge_embeds) # [B, C, 1+N, 1+N] -> [B, n_head, N, N]
+        attn = attn + attn_bias # [B, n_head, N, N]
         residual = attn
 
         #attn = attn.masked_fill(padding_mask, float("-inf"))
@@ -187,7 +187,7 @@ class GraphPropagationAttention(nn.Module):
         node_embeds = (attn @ v).transpose(1, 2).reshape(B, N, C)
 
         # node-to-edge propagation
-        edge_embeds = self.expand(attn + residual)  # [B, n_head, 1+N, 1+N] -> [B, C, 1+N, 1+N]
+        edge_embeds = self.expand(attn + residual)  # [B, n_head, N, N] -> [B, C, N, N]
 
         # edge-to-node propagation
         #w = edge_embeds.masked_fill(padding_mask, float("-inf"))
