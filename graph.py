@@ -177,7 +177,7 @@ class GraphPropagationAttention(nn.Module):
         q, k, v = qkv.unbind(0)
         attn = (q @ k.transpose(-2, -1)) * self.scale # [B, n_head, N, N]
         #print(edge_embeds.shape)
-        attn_bias = self.reduce(edge_embeds) # [B, C, 1+N, 1+N] -> [B, n_head, N, N]
+        attn_bias = self.reduce(edge_embeds) # [B, C, N, N] -> [B, n_head, N, N]
         attn = attn + attn_bias # [B, n_head, N, N]
         residual = attn
 
