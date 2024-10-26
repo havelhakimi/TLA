@@ -5,7 +5,8 @@ import torch.nn.functional as F
 from transformers import AutoTokenizer
 from transformers.activations import ACT2FN
 import os
-
+#from torch_geometric.nn import GCNConv, GATConv 
+#install torch-geometric ,torch-scatter and torch-sparse  to run GCN or GAT
 class GraphAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper"""
 
@@ -211,10 +212,10 @@ class GraphLayer(nn.Module):
             self.graph = GraphAttention(config.hidden_size, config.num_attention_heads,
                                         config.attention_probs_dropout_prob)
         elif self.graph_type == 'GCN':
-            pass
+            pass # comment 'pass' to run GCN
             self.graph = GCNConv(config.hidden_size, config.hidden_size)
         elif self.graph_type == 'GAT':
-            pass
+            pass # # comment 'pass' to run GAT
             self.graph = GATConv(config.hidden_size, config.hidden_size, 1)
         elif self.graph_type=='GPTrans':
             self.graph=GraphPropagationAttention(node_dim=config.hidden_size, edge_dim=edge_dim, num_heads=config.num_attention_heads, qkv_bias=False, attn_drop= config.attention_probs_dropout_prob, proj_drop= config.attention_probs_dropout_prob)
