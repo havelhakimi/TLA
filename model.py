@@ -92,7 +92,7 @@ class APLLoss(nn.Module):
 
         self.gamma_neg = gamma_neg
         self.gamma_pos = gamma_pos
-        self.clip = clip # a hard threshold to reduc eimpact of easily clasified negative examples 
+        self.clip = clip # a hard threshold to de-emphasize gradient of easily clasified negative examples 
         self.disable_torch_grad_focal_loss = disable_torch_grad_focal_loss
         self.eps = eps
 
