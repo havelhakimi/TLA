@@ -4,7 +4,7 @@ Official implementation for the ECML-PKDD 2024 accepted paper "Modeling Text-Lab
 - Python >= 3.6
 - torch >= 1.6.0
 - transformers >= 4.2.1
-- Below libraries only if you want to run on GAT/GCN
+- Below libraries only if you want to run on GAT/GCN as the graph encoder
   - torch-geometric == 2.4.0
   - torch-sparse == 0.6.17
   - torch-scatter == 2.1.1
