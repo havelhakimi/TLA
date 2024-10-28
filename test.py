@@ -5,7 +5,7 @@ from torch.utils.data import DataLoader, Subset
 from tqdm import tqdm
 import argparse
 import os
-from train import BertDataset
+from traint import BertDataset
 from eval import evaluate
 from model import PLM_Graph
 import numpy as np
@@ -13,22 +13,22 @@ import numpy as np
 parser = argparse.ArgumentParser()
 parser.add_argument('--device', type=str, default='cuda')
 parser.add_argument('--batch', type=int, default=32, help='Batch size.')
-parser.add_argument('--data', type=str, default='wos',  help='Dataset.')
 parser.add_argument('--name', type=str, required=True, help='Name of checkpoint. Commonly as DATASET-NAME.')
 parser.add_argument('--extra', default='_micro', choices=['_macro', '_micro'], help='An extra string in the name of checkpoint.')
+#parser.add_argument('--thr', type=float, default=0.5, help='Threshold.')
 args = parser.parse_args()
 
 if __name__ == '__main__':
-    #checkpoint = torch.load(os.path.join('checkpoints', args.name, 'checkpoint_best{}.pt'.format(args.extra)),map_location='cpu')
-    ckp_path = os.path.join('../HiTEAL/data', args.data,'Checkpoints')
-    data_path = os.path.join('../HiTEAL/data', args.data)
-    
-    checkpoint = torch.load(os.path.join(ckp_path, args.name, 'checkpoint_best{}.pt'.format(args.extra)),
+    #checkpoint = torch.load(os.path.join('checkpoints', args.name, 'checkpoint_best{}.pt'.format(args.extra)),map_location='cpu')    
+    data_path_root=os.path.join('../TLA/data', args.data)
+    data_path=data_path_root+'Checkpoints/'
+    checkpoint = torch.load(os.path.join(data_path, args.name, 'checkpoint_best{}.pt'.format(args.extra)),
                             map_location='cpu')       
     batch_size = args.batch
     device = args.device
     extra = args.extra
     mod_name=args.name
+    #thr=args.thr
     args = checkpoint['args'] if checkpoint['args'] is not None else args
     #data_path = os.path.join('data', args.data)
 
@@ -39,25 +39,26 @@ if __name__ == '__main__':
     tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
     config = AutoConfig.from_pretrained(args.mod_type)
 
-    label_dict = torch.load(os.path.join(data_path, 'bert_value_dict.pt'))
+    label_dict = torch.load(os.path.join(data_path_root, 'bert_value_dict.pt'))
     label_dict = {i: tokenizer.decode(v, skip_special_tokens=True) for i, v in label_dict.items()}
     num_class = len(label_dict)
 
-    dataset = BertDataset(device=device, pad_idx=tokenizer.pad_token_id, data_path=data_path)
+    dataset = BertDataset(device=device, pad_idx=tokenizer.pad_token_id, data_path=data_path_root)
 
-
+   
     model = PLM_Graph(config, num_labels=num_class,
                                           graph=args.graph,mod_type=args.mod_type,graph_type=args.graph_type,
                                           bce_wt=args.bce_wt,dot=args.dot,
                                           layer=args.layer, data_path=args.data,
-                                          teal=args.teal,teal_wt=args.teal_wt,gpos=args.gpos,gneg=args.gneg,disgrad=args.disgrad,
-                                          label_refiner=args.label_refiner,alpha1=args.alpha1,beta1=args.beta1,alpha2=args.alpha2
+                                          tla=args.tla,tl_pen=args.tl_pen,tl_temp=args.tl_temp,norm=args.norm,proj=args.proj,hsize=args.hsize,
+                                          label_refiner=args.label_refiner,edge_dim=args.edge_dim
                                           )
+
     
 
 
 
-    split = torch.load(os.path.join(data_path, 'split.pt'))
+    split = torch.load(os.path.join(data_path_root, 'split.pt'))
     test = Subset(dataset, split['test'])
     test = DataLoader(test, batch_size=batch_size, shuffle=False, collate_fn=dataset.collate_fn)
     model.load_state_dict(checkpoint['param'])
@@ -86,9 +87,10 @@ if __name__ == '__main__':
                 pred.append(torch.sigmoid(l).tolist())
 
     pbar.close()
-    scores = evaluate(pred, truth, label_dict, threshold=args.threshold)
-    pred_rcv=np.array(pred)
-    np_name=mod_name+extra+'.npy'
+    #args.thr=thr
+    scores = evaluate(pred, truth, label_dict,)
+    #pred_rcv=np.array(pred)
+    #np_name=mod_name+extra+'.npy'
     #np.save(np_name,pred_rcv)
 
     macro_f1 = scores['macro_f1']
@@ -96,6 +98,7 @@ if __name__ == '__main__':
     print(f'Model {mod_name} with best {extra} checkpoint')
     print('macro', macro_f1, 'micro', micro_f1)
     
+
 
 
 
