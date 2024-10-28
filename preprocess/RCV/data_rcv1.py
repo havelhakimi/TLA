@@ -57,22 +57,7 @@ if __name__ == '__main__':
                 one_hot[i] = 1
             f.writelines(' '.join(map(lambda x: str(x), one_hot)) + '\n')
 
-    from fairseq.binarizer import Binarizer
-    from fairseq.data import indexed_dataset
-
-    for data_path in ['tok', 'Y']:
-        offsets = Binarizer.find_offsets(data_path + '.txt', 1)
-        ds = indexed_dataset.make_builder(
-            data_path + '.bin',
-            impl='mmap',
-            vocab_size=tokenizer.vocab_size,
-        )
-        Binarizer.binarize(
-            data_path + '.txt', None, lambda t: ds.add_item(t), offset=0, end=offsets[1], already_numberized=True,
-            append_eos=False
-        )
-        ds.finalize(data_path + '.idx')
-
+    
     data = pd.read_csv('rcv1_v2.csv')
     ids = []
     for i, line in tqdm(data.iterrows()):
