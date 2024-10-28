@@ -4,10 +4,10 @@ Official implementation for the ECML-PKDD 2024 accepted paper "Modeling Text-Lab
 - Python >= 3.6
 - torch >= 1.6.0
 - transformers >= 4.2.1
-- fairseq == 0.10.0
-- torch-geometric == 2.4.0
-- torch-sparse == 0.6.17
-- torch-scatter == 2.1.1
+- Below libraries only if you want to run on GAT/GCN
+  - torch-geometric == 2.4.0
+  - torch-sparse == 0.6.17
+  - torch-scatter == 2.1.1
 
 ## Data
 - All datasets are publically available and can be accessed at [WOS](https://github.com/kk7nc/HDLTex), [RCV1-V2](https://trec.nist.gov/data/reuters/reuters.html) and [NYT](https://catalog.ldc.upenn.edu/LDC2008T19). 
