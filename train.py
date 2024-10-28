@@ -11,6 +11,7 @@ import torch.nn as nn
 from eval import evaluate
 from model import PLM_Graph
 import random
+import tarfile
 import numpy as np
 
 
@@ -29,14 +30,21 @@ def seed_torch(seed=1029):
 
 class BertDataset(Dataset):
     def __init__(self, max_token=512, device='cpu', pad_idx=0, data_path=None):
-        self.device = device
+        
         super(BertDataset, self).__init__()
-        self.data = data_utils.load_indexed_dataset(
-            data_path + '/tok', None, 'mmap'
-        )
-        self.labels = data_utils.load_indexed_dataset(
-            data_path + '/Y', None, 'mmap'
-        )
+        self.device = device
+        extraction_path=os.path.join(data_path,'tok.tar.xz')
+        with tarfile.open(extraction_path, 'r:*') as tar_ref: 
+            tar_ref.extractall(data_path)
+            
+        tok_path = os.path.join(data_path, 'tok.txt')
+        y_path = os.path.join(data_path, 'Y.txt')
+        with open(tok_path,'r') as f:
+            self.data=[torch.tensor([int(id) for id in line.strip().split()] ,dtype=torch.long) for line in f.readlines() ]
+            
+        with open(y_path, 'r', encoding='utf-8') as f:
+            self.labels = [torch.tensor([int(id) for id in line.strip().split()] ,dtype=torch.long) for line in f.readlines() ]
+        
         self.max_token = max_token
         self.pad_idx = pad_idx
 
