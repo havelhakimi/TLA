@@ -134,21 +134,6 @@ if __name__ == '__main__':
         for s in label_ids:
             f.writelines(' '.join(map(lambda x: str(x), s)) + '\n')
 
-    from fairseq.binarizer import Binarizer
-    from fairseq.data import indexed_dataset
-
-    for data_path in ['tok', 'Y', ]:
-        offsets = Binarizer.find_offsets(data_path + '.txt', 1)
-        ds = indexed_dataset.make_builder(
-            data_path + '.bin',
-            impl='mmap',
-            vocab_size=tokenizer.vocab_size,
-        )
-        Binarizer.binarize(
-            data_path + '.txt', None, lambda t: ds.add_item(t), offset=0, end=offsets[1], already_numberized=True,
-            append_eos=False
-        )
-        ds.finalize(data_path + '.idx')
 
     train_split = open('idnewnyt_train.json', 'r').readlines()
     dev_split = open('idnewnyt_val.json', 'r').readlines()
