@@ -86,7 +86,7 @@ parser.add_argument('--name', type=str, required=True, help='A name for differen
 parser.add_argument('--update', type=int, default=1, help='Gradient accumulate steps')
 parser.add_argument('--warmup', default=0, type=int, help='Warmup steps.')
 parser.add_argument('--graph', default=0, type=int, help='Whether use graph encoder.')
-parser.add_argument('--layer', default=1, type=int, help='Layer of Graphormer.')
+parser.add_argument('--layer', default=1, type=int, help='Layer of GPTrans.')
 parser.add_argument('--mod_type', default='bert-base-uncased', type=str, choices=['bert-base-uncased','roberta-large'], help='Select backbone')
 parser.add_argument('--graph_type', type=str, default='GPTrans',choices=['GPTrans','graphormer','GAT', 'GCN'], help='graph type')
 parser.add_argument('--edge_dim', default=30, type=int, help='Edge dimension for GPTrans .')
