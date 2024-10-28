@@ -21,9 +21,9 @@ args = parser.parse_args()
 
 if __name__ == '__main__':
     #checkpoint = torch.load(os.path.join('checkpoints', args.name, 'checkpoint_best{}.pt'.format(args.extra)),map_location='cpu')    
-    data_path_root=os.path.join('../TLA/data', args.data)
-    data_path=data_path_root+'/Checkpoints'
-    checkpoint = torch.load(os.path.join(data_path, args.name, 'checkpoint_best{}.pt'.format(args.extra)),
+    ckp_path=os.path.join('../TLA/data', args.data,'Checkpoints')
+    data_path=os.path.join('../TLA/data', args.data)
+    checkpoint = torch.load(os.path.join(ckp_path, args.name, 'checkpoint_best{}.pt'.format(args.extra)),
                             map_location='cpu')       
     batch_size = args.batch
     device = args.device
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     mod_name=args.name
     #thr=args.thr
     args = checkpoint['args'] if checkpoint['args'] is not None else args
-    #data_path = os.path.join('data', args.data)
+    
 
 
     if not hasattr(args, 'graph'):
@@ -40,11 +40,11 @@ if __name__ == '__main__':
     tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
     config = AutoConfig.from_pretrained(args.mod_type)
 
-    label_dict = torch.load(os.path.join(data_path_root, 'bert_value_dict.pt'))
+    label_dict = torch.load(os.path.join(data_path, 'bert_value_dict.pt'))
     label_dict = {i: tokenizer.decode(v, skip_special_tokens=True) for i, v in label_dict.items()}
     num_class = len(label_dict)
 
-    dataset = BertDataset(device=device, pad_idx=tokenizer.pad_token_id, data_path=data_path_root)
+    dataset = BertDataset(device=device, pad_idx=tokenizer.pad_token_id, data_path=data_path)
 
    
     model = PLM_Graph(config, num_labels=num_class,
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 
 
-    split = torch.load(os.path.join(data_path_root, 'split.pt'))
+    split = torch.load(os.path.join(data_path, 'split.pt'))
     test = Subset(dataset, split['test'])
     test = DataLoader(test, batch_size=batch_size, shuffle=False, collate_fn=dataset.collate_fn)
     model.load_state_dict(checkpoint['param'])
