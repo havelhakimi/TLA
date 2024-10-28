@@ -85,24 +85,21 @@ parser.add_argument('--device', type=str, default='cuda')
 parser.add_argument('--name', type=str, required=True, help='A name for different runs.')
 parser.add_argument('--update', type=int, default=1, help='Gradient accumulate steps')
 parser.add_argument('--warmup', default=0, type=int, help='Warmup steps.')
-parser.add_argument('--graph', default=1, type=int, help='Whether use graph encoder.')
-parser.add_argument('--layer', default=1, type=int, help='Layer of GAT.')
+parser.add_argument('--graph', default=0, type=int, help='Whether use graph encoder.')
+parser.add_argument('--layer', default=1, type=int, help='Layer of GPTrans.')
 parser.add_argument('--mod_type', default='bert-base-uncased', type=str, choices=['bert-base-uncased','roberta-large'], help='Select backbone')
-parser.add_argument('--graph_type', type=str, default='GAT', help='graph type')
-parser.add_argument('--label_refiner', default=0, type=int, help='additional FFN for GAT.')
-parser.add_argument('--bce_wt', type=float, default=0, help='bce_wt.')
+parser.add_argument('--graph_type', type=str, default='GPTrans',choices=['GPTrans','graphormer','GAT', 'GCN'], help='graph type')
+parser.add_argument('--edge_dim', default=30, type=int, help='Edge dimension for GPTrans .')
+parser.add_argument('--label_refiner', default=1, type=int, help='Label Refiner.')
+parser.add_argument('--bce_wt', type=float, default=1, help='bce_wt.')
 parser.add_argument('--dot', default=0, type=int, help='Dot prod.')
 parser.add_argument('--seed', default=3, type=int, help='Random seed.')
-parser.add_argument('--edge_dim', default=1, type=int, help='Label Refiner.')
-parser.add_argument('--threshold', type=float, default=0.5, help='Threshold during inference')
-parser.add_argument('--teal', type=int, default=0, help='whether TEAL required or not')
-parser.add_argument('--teal_wt', type=float, default=1.0, help='weight for TEAL')
-parser.add_argument('--gpos', type=float, default=0, help='Focusing hyperparameter for positive loss in TEAL')
-parser.add_argument('--gneg', type=float, default=1, help='Focusing hyperparameter for negative loss in TEAL')
-parser.add_argument('--disgrad', type=int, default=0, help='disable gradient whiel TEAL calculation')
-parser.add_argument('--alpha1', type=float, default=1, help='Coefficent alpha1 for TEAL')
-parser.add_argument('--alpha2', type=float, default=2, help='Coefficent alpha2 for TEAL')
-parser.add_argument('--beta1', type=float, default=0, help='Droupout')
+parser.add_argument('--tla', type=int, default=0, help='whether TLA required or not')
+parser.add_argument('--tl_pen', type=float, default=1.0, help='weight for TLA loss')
+parser.add_argument('--tl_temp', type=float, default=0.07, help='Temperature of TLA loss')
+parser.add_argument('--norm', type=int, default=0, help='whether embeddings to be normalized before TLA')
+parser.add_argument('--proj', type=int, default=0, help='whether embeddings of text and label to be transformed before TLA')
+parser.add_argument('--hsize', default=768, type=int, help='Hidden size after projection')
 
 
 if __name__ == '__main__':
@@ -122,7 +119,7 @@ if __name__ == '__main__':
     args.name = args.data + '-' + args.name
     tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
     #data_path = os.path.join('data', args.data)
-    data_path = os.path.join('../HiTEAL/data', args.data)
+    data_path = os.path.join('../TLA/data', args.data)
     args.data=data_path
     label_dict = torch.load(os.path.join(data_path, 'bert_value_dict.pt'))
     label_dict = {i: tokenizer.decode(v, skip_special_tokens=True) for i, v in label_dict.items()}
@@ -134,8 +131,8 @@ if __name__ == '__main__':
                                           graph=args.graph,mod_type=args.mod_type,graph_type=args.graph_type,
                                           bce_wt=args.bce_wt,dot=args.dot,
                                           layer=args.layer, data_path=args.data,
-                                          teal=args.teal,teal_wt=args.teal_wt,gpos=args.gpos,gneg=args.gneg,disgrad=args.disgrad,
-                                          label_refiner=args.label_refiner,alpha1=args.alpha1,beta1=args.beta1,alpha2=args.alpha2
+                                          tla=args.tla,tl_pen=args.tl_pen,tl_temp=args.tl_temp,norm=args.norm,proj=args.proj,
+                                          hsize=args.hsize,label_refiner=args.label_refiner,edge_dim=args.edge_dim
                                           )
 
     
@@ -213,7 +210,7 @@ if __name__ == '__main__':
                 padding_mask = data != tokenizer.pad_token_id
                 #data=data.to(device),label.to(device),padding_mask.to(device), padding_mask.to(device)
 
-                output = model(data, padding_mask, labels=label,  )
+                output = model(data, padding_mask, labels=label, )
                 for l in label:
                     t = []
                     for i in range(l.size(0)):
@@ -224,7 +221,7 @@ if __name__ == '__main__':
                     pred.append(torch.sigmoid(l).tolist())
 
         pbar.close()
-        scores = evaluate(pred, truth, label_dict, threshold=args.threshold)
+        scores = evaluate(pred, truth, label_dict)
         macro_f1 = scores['macro_f1']
         micro_f1 = scores['micro_f1']
         print('macro', macro_f1, 'micro', micro_f1)
