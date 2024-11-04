@@ -1,5 +1,8 @@
 # TLA (Text-Label Alignment)
 Official implementation for the ECML-PKDD 2024 accepted paper "Modeling Text-Label Alignment for Hierarchical Text Classification" [arxiv](https://arxiv.org/abs/2409.00788) [ecml](https://link.springer.com/chapter/10.1007/978-3-031-70365-2_10) 
+## Demo notebook
+To Run_HTLA
+
 ## Requirements
 - Python >= 3.6
 - torch >= 1.6.0
