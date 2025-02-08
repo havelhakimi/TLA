@@ -36,8 +36,7 @@ Some Important arguments: </br>
 - `--tla` whether Text-Label Alignment (TLA) Loss required or not. If set to 0, the model will be optimized only on BCE loss, which we refer to as BERT-GPTrans in the paper.
 - `--tl_temp` Temperature value for the TLA loss (We use 0.07 as the temp. value for all datasets)
 - The node feature is fixed as 768 to match the text feature size and is not included as run time argument   
-### For multiple  random runs
-In `train.py` set the `--seed=None` for multiple random runs
+
 ### Other arguments for TLA in train.py:
 Arguments of train.py, namely `--norm`, `--proj`, and `--hsize`, are part of TLA but have not been used in this work and can be ignored.
 
