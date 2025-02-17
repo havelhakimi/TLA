@@ -188,7 +188,7 @@ class GraphPropagationAttention(nn.Module):
         node_embeds = (attn @ v).transpose(1, 2).reshape(B, N, C)
 
         # node-to-edge propagation
-        edge_embeds = self.expand(attn + residual)  # [B, n_head, N, N] -> [B, C, N, N]
+        edge_embeds = self.expand(attn + residual)  # [B, n_head, N, N] -> [B, edge_dim, N, N]
 
         # edge-to-node propagation
         #w = edge_embeds.masked_fill(padding_mask, float("-inf"))
