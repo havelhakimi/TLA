@@ -183,7 +183,7 @@ class GraphPropagationAttention(nn.Module):
         residual = attn
 
         #attn = attn.masked_fill(padding_mask, float("-inf"))
-        attn = attn.softmax(dim=-1) # [B, C, N, N]
+        attn = attn.softmax(dim=-1) # [B, n_head, N, N]
         attn = self.attn_drop(attn)
         node_embeds = (attn @ v).transpose(1, 2).reshape(B, N, C)
 
