@@ -1,5 +1,5 @@
 # TLA (Text-Label Alignment)
-Official implementation for the ECML-PKDD 2024 accepted paper "Modeling Text-Label Alignment for Hierarchical Text Classification" [arxiv](https://arxiv.org/abs/2409.00788) [ecml](https://link.springer.com/chapter/10.1007/978-3-031-70365-2_10) 
+Official implementation for the ECML-PKDD 2024 accepted paper "**Modeling Text-Label Alignment for Hierarchical Text Classification**" [arxiv](https://arxiv.org/abs/2409.00788) [ecml](https://link.springer.com/chapter/10.1007/978-3-031-70365-2_10) 
 ## Demo notebook
 The notebook, [run_htla.ipynb](https://github.com/havelhakimi/TLA/blob/main/run_HTLA.ipynb), demonstrates how to run the scripts provided in this repository to train models using the WOS dataset.
 ## Requirements
