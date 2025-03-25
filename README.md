@@ -5,7 +5,7 @@ The notebook, [run_htla.ipynb](https://github.com/havelhakimi/TLA/blob/main/run_
 ## Requirements
 - Python >= 3.6
 - torch >= 1.6.0
-- transformers >= 4.2.1
+- transformers >= 4.30.2
 - Below libraries only if you want to run on GAT/GCN as the graph encoder
   - torch-geometric == 2.4.0
   - torch-sparse == 0.6.17
